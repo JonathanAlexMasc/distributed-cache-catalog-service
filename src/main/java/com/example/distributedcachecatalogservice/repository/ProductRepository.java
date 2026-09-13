@@ -1,11 +1,10 @@
 package com.example.distributedcachecatalogservice.repository;
 
 import com.example.distributedcachecatalogservice.model.Product;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProductRepository {
-    Product save(Product product);
-    Optional<Product> findById(String id);
-    List<Product> findByCategory(String category);
+import java.util.List;
+
+public interface ProductRepository extends JpaRepository<Product, String> {
+    List<Product> findByCategoryIgnoreCase(String category);
 }
