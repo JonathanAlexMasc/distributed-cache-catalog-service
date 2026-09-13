@@ -24,7 +24,7 @@ public class ProductService {
     }
 
     public List<Product> findByCategory(String category) {
-        return repository.findByCategory(category);
+        return repository.findByCategoryIgnoreCase(category);
     }
 
     public Product update(String id, ProductRequest request) {
