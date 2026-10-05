@@ -6,8 +6,12 @@ import com.example.distributedcachecatalogservice.service.ProductNotFoundExcepti
 import com.example.distributedcachecatalogservice.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
@@ -42,4 +46,16 @@ public class ProductController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ProductNotFoundException.class)
     public void productNotFound() {}
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ProblemDetail validationFailed(MethodArgumentNotValidException exception) {
+        Map<String, String> errors = new LinkedHashMap<>();
+        exception.getBindingResult().getFieldErrors()
+                .forEach(error -> errors.putIfAbsent(error.getField(), error.getDefaultMessage()));
+
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Validation failed");
+        problem.setProperty("errors", errors);
+        return problem;
+    }
 }
