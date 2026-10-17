@@ -33,6 +33,11 @@ public class ProductController {
         return service.getById(id);
     }
 
+    @GetMapping("/categories")
+    public List<String> findCategories() {
+        return service.findCategories();
+    }
+
     @GetMapping
     public List<Product> find(@RequestParam(required = false) String category) {
         return category == null ? List.of() : service.findByCategory(category);

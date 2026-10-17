@@ -42,6 +42,15 @@ class ProductRepositoryTest {
     }
 
     @Test
+    void findsDistinctCategoriesInOrder() {
+        repository.save(product("keyboard-1", "Keyboard", "keyboards", "49.99"));
+        repository.save(product("desk-1", "Desk", "furniture", "199.00"));
+        repository.save(product("keyboard-2", "Keyboard Pro", "keyboards", "79.99"));
+
+        assertThat(repository.findDistinctCategories()).containsExactly("furniture", "keyboards");
+    }
+
+    @Test
     void returnsEmptyWhenProductDoesNotExist() {
         assertThat(repository.findById("missing")).isEmpty();
     }

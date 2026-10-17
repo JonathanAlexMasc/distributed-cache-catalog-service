@@ -33,6 +33,10 @@ public class ProductService {
         return repository.findByCategoryIgnoreCase(category);
     }
 
+    public List<String> findCategories() {
+        return repository.findDistinctCategories();
+    }
+
     @CacheEvict(cacheNames = {"products", "productsByCategory"}, allEntries = true)
     public Product update(String id, ProductRequest request) {
         getById(id);
