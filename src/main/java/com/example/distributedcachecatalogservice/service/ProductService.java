@@ -25,11 +25,19 @@ public class ProductService {
 
     @Cacheable(cacheNames = "products", key = "#id")
     public Product getById(String id) {
+        return getByIdUncached(id);
+    }
+
+    public Product getByIdUncached(String id) {
         return repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     @Cacheable(cacheNames = "productsByCategory", key = "#category.toLowerCase()")
     public List<Product> findByCategory(String category) {
+        return findByCategoryUncached(category);
+    }
+
+    public List<Product> findByCategoryUncached(String category) {
         return repository.findByCategoryIgnoreCase(category);
     }
 

@@ -1,6 +1,7 @@
 package com.example.distributedcachecatalogservice.repository;
 
 import com.example.distributedcachecatalogservice.model.Product;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ProductRepositoryTest {
     @Autowired
     private ProductRepository repository;
+
+    @BeforeEach
+    void clearState() {
+        repository.deleteAll();
+    }
 
     @Test
     void savesAndFindsProductById() {

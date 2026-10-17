@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Catalog cache load experiments">
+  <title>Load simulation | Catalog desk</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/load.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">C</span><span>Catalog desk</span></a>
+    <nav class="desk-nav" aria-label="Main navigation">
+      <a href="/">Products</a><a href="/load.html" aria-current="page">Load simulation</a>
+    </nav>
+  </header>
+  <main class="shell load-shell">
+    <div class="load-heading">
+      <div><p class="eyebrow">Cache experiments</p><h1>Load simulation</h1></div>
+      <span class="run-badge" id="run-status" role="status">Connecting</span>
+    </div>
+    <div id="connection-message" class="connection-message" role="status">Checking server availability...</div>
+    <section class="simulation-layout" aria-label="Load experiment">
+      <form id="load-form" class="run-config">
+        <fieldset id="configuration" disabled>
+          <legend>Experiment setup</legend>
+          <label class="field"><span>Target</span>
+            <select id="target-type"><option value="product">Product</option><option value="category">Category</option></select>
+          </label>
+          <label class="field" id="product-field"><span>Product ID</span>
+            <input id="load-product" value="cache-lab-v1-0000001" maxlength="100" required>
+          </label>
+          <label class="field hidden" id="category-field"><span>Category</span>
+            <select id="load-category" disabled><option value="">Choose a category</option></select>
+          </label>
+          <label class="field"><span>Cache mode</span>
+            <select id="load-mode">
+              <option value="compare">Compare both</option><option value="cached">Cached</option><option value="bypass">Bypass cache</option>
+            </select>
+          </label>
+          <div class="config-numbers">
+            <label class="field"><span>Requests per run</span><input id="load-count" type="number" value="10000" min="1" max="100000" step="1" required></label>
+            <label class="field"><span>Concurrency</span><input id="load-concurrency" type="number" value="5" min="1" max="20" step="1" required></label>
+          </div>
+          <div class="run-budget"><span>Total measured requests</span><strong id="total-budget">20,000</strong></div>
+          <label class="acknowledgement"><input id="load-ack" type="checkbox" required><span>I authorize this load on the connected catalog.</span></label>
+          <button type="submit" class="button button-primary" id="start-run">Start experiment</button>
+        </fieldset>
+      </form>
+      <div class="run-output">
+        <div class="progress-heading"><h2 id="phase-title">Ready for an experiment</h2><button type="button" class="button button-secondary" id="stop-run" disabled>Stop</button></div>
+        <div class="progress-label"><span id="phase-detail">No requests sent</span><span id="progress-label">0 / 0</span></div>
+        <progress id="run-progress" value="0" max="1" aria-label="Experiment progress"></progress>
+        <div class="live-metrics">
+          <div><span>Elapsed</span><strong id="metric-duration">0.0 s</strong></div>
+          <div><span>Throughput</span><strong id="metric-throughput">0 req/s</strong></div>
+          <div><span>Success</span><strong id="metric-success">0.0%</strong></div>
+          <div><span>Errors</span><strong id="metric-errors">0</strong></div>
+        </div>
+        <div id="run-message" class="run-message hidden" role="alert"></div>
+        <div class="results-heading"><h2>Results</h2><button type="button" class="button button-secondary" id="export-results" disabled>Export CSV</button></div>
+        <div class="results-scroll">
+          <table class="results-table">
+            <thead><tr><th scope="col">Run</th><th scope="col">Requests</th><th scope="col">Duration</th><th scope="col">Req/s</th><th scope="col">Avg</th><th scope="col">P95</th><th scope="col">Success</th></tr></thead>
+            <tbody id="results-body"><tr><td colspan="7" class="no-results">No results yet</td></tr></tbody>
+          </table>
+        </div>
+        <p id="comparison-result" class="comparison-result" aria-live="polite"></p>
+        <div class="error-heading"><h2>Error log</h2><span id="error-count">0 errors</span></div>
+        <ul id="error-log" class="error-log"><li class="no-errors">No errors recorded</li></ul>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/load.js"></script>
+</body>
+</html>

@@ -37,6 +37,17 @@ class ProductControllerTest {
     }
 
     @Test
+    void loadSimulationIsDisabledByDefault() throws Exception {
+        mockMvc.perform(get("/api/load-simulation"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.enabled").value(false));
+        mockMvc.perform(get("/api/load-simulation/products/keyboard-1"))
+                .andExpect(status().isForbidden());
+        mockMvc.perform(get("/api/load-simulation/category").param("category", "electronics"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
     void createsProduct() throws Exception {
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
