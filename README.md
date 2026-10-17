@@ -64,6 +64,13 @@ Run all tests:
 ./gradlew test
 ```
 
+The cache measurement runs as part of the test suite and prints average read
+time for uncached and cached product lookups, along with the observed speedup:
+
+```bash
+./gradlew test --tests '*ProductServiceCacheMeasurementTest'
+```
+
 Tests use the `test` profile and an in-memory H2 database. PostgreSQL does not need to be running for the test suite.
 
 Build, test, and package the application:
