@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Product catalog management">
+  <title>Catalog desk</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Catalog desk home">
+      <span class="brand-mark">C</span>
+      <span>Catalog desk</span>
+    </a>
+    <span class="status"><span class="status-dot"></span> Local catalog</span>
+  </header>
+
+  <main class="shell">
+    <section class="page-heading">
+      <div>
+        <p class="eyebrow">Product operations</p>
+        <h1>Keep the catalog tidy.</h1>
+        <p class="lede">Find products by category, inspect the details, and make updates without leaving the desk.</p>
+      </div>
+      <button class="button button-primary" id="new-product-button" type="button">+ New product</button>
+    </section>
+
+    <section class="workspace" aria-label="Product catalog">
+      <aside class="panel catalog-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Browse</p>
+            <h2>Catalog</h2>
+          </div>
+          <span class="count" id="result-count">0</span>
+        </div>
+        <form class="search-form" id="category-form">
+          <label for="category-input">Category</label>
+          <div class="search-row">
+            <select id="category-input" name="category" required>
+              <option value="">Choose a category</option>
+            </select>
+            <button class="icon-button" type="submit" aria-label="Search category" title="Search category">&#8594;</button>
+          </div>
+        </form>
+        <div class="list-status" id="list-status" aria-live="polite">
+          <div class="empty-state compact">
+            <span class="empty-icon">⌕</span>
+            <strong>Choose a category</strong>
+            <span>Results will appear here.</span>
+          </div>
+        </div>
+        <div class="product-list" id="product-list"></div>
+      </aside>
+
+      <section class="panel detail-panel" id="detail-panel" aria-live="polite">
+        <div class="empty-state detail-empty" id="detail-empty">
+          <span class="empty-icon large">＋</span>
+          <h2>Nothing selected</h2>
+          <p>Select a product or create a new one to view its details.</p>
+          <button class="button button-secondary" id="empty-new-button" type="button">Create product</button>
+        </div>
+
+        <form class="product-form hidden" id="product-form" novalidate>
+          <div class="detail-heading">
+            <div>
+              <p class="eyebrow" id="form-eyebrow">New product</p>
+              <h2 id="form-title">Create product</h2>
+            </div>
+            <span class="product-id hidden" id="product-id"></span>
+          </div>
+          <div class="form-alert hidden" id="form-alert" role="alert"></div>
+          <div class="form-grid">
+            <label class="field field-wide">
+              <span>Name</span>
+              <input name="name" required maxlength="255" placeholder="Product name">
+              <small class="field-error" data-error="name"></small>
+            </label>
+            <label class="field">
+              <span>Category</span>
+              <input name="category" required maxlength="255" placeholder="Category">
+              <small class="field-error" data-error="category"></small>
+            </label>
+            <label class="field">
+              <span>Price</span>
+              <input name="price" required min="0" step="0.01" type="number" placeholder="0.00">
+              <small class="field-error" data-error="price"></small>
+            </label>
+            <label class="field field-wide">
+              <span>Description <em>Optional</em></span>
+              <textarea name="description" maxlength="1000" rows="4" placeholder="A short description"></textarea>
+              <small class="field-error" data-error="description"></small>
+            </label>
+          </div>
+          <div class="form-actions">
+            <button class="button button-secondary" id="cancel-button" type="button">Cancel</button>
+            <button class="button button-primary" id="save-button" type="submit">Save product</button>
+          </div>
+        </form>
+
+        <div class="detail-loading hidden" id="detail-loading" aria-label="Loading product"><span></span><span></span><span></span></div>
+        <div class="detail-error hidden" id="detail-error" role="alert"></div>
+      </section>
+    </section>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
